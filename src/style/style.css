@@ -1,5 +1,6 @@
-.asteroids-game-div {
+body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: darkred;
 }
