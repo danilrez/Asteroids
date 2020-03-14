@@ -1,10 +1,9 @@
 body {
-  background: rgb(20, 20, 20);
+  background: rgb(15, 15, 15);
   background-blend-mode: screen;
 }
 
 .asteroids-game-div {
-  border: 1px solid red;
   display: flex;
   justify-content: center;
   margin-top: auto;
