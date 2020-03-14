@@ -1,6 +1,15 @@
 body {
+  background: rgb(20, 20, 20);
+  background-blend-mode: screen;
+}
+
+.asteroids-game-div {
+  border: 1px solid red;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: wheat;
+  margin-top: auto;
+}
+
+#gameCanvas {
+  display: flex;
 }
