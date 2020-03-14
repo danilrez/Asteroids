@@ -191,6 +191,8 @@ function update() {
   let a, r, x, y, offs, vert;
   for (let i = 0; i < roids.length; i++) {
     ctx.strokeStyle = 'darkgrey';
+    ctx.shadowBlur = 0;
+
     ctx.lineWidth = SHIP_SIZE / 20;
 
     // get the asteroid properties
@@ -212,12 +214,15 @@ function update() {
         y + r * offs[j] * Math.sin(a + (j * Math.PI * 2) / vert)
       );
     }
+
+    ctx.shadowBlur = 0;
     ctx.closePath();
     ctx.stroke();
 
     // show asteroid's collision circle
     if (SHOW_BOUNDING) {
       ctx.strokeStyle = 'lightgreen';
+      ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2, false);
       ctx.stroke();
@@ -231,6 +236,9 @@ function update() {
 
     // DRAW the thruster
     if (!exploding && blinkOn) {
+      ctx.shadowColor = 'red';
+      ctx.shadowBlur = 10;
+
       ctx.fillStyle = 'tomato';
       ctx.strokeStyle = 'gold';
       ctx.lineWidth = SHIP_SIZE / 10;
@@ -281,6 +289,7 @@ function update() {
         ship.x - ship.r * ((2 / 3) * Math.cos(ship.a) - Math.sin(ship.a)),
         ship.y + ship.r * ((2 / 3) * Math.sin(ship.a) + Math.cos(ship.a))
       );
+      ctx.shadowBlur = 0;
       ctx.closePath();
       ctx.stroke();
     }
@@ -294,32 +303,46 @@ function update() {
       if (ship.blinkTime == 0) {
         ship.blinkTime = Math.ceil(SHIP_BLINK_DUR * FPS);
         ship.blinkNum--;
+        ctx.shadowBlur = 0;
       }
     }
   } else {
     // DRAW the explosion (concentric circles of different colours)
-    // ctx.fillStyle = 'darkred';
+
+    ctx.fillStyle = 'darkred';
     ctx.shadowColor = 'darkred';
-    ctx.shadowBlur = 25;
+    ctx.shadowBlur = 10;
     ctx.beginPath();
-    ctx.arc(ship.x, ship.y, ship.r * 1.7, 0, Math.PI * 2, false);
+    ctx.arc(ship.x, ship.y, ship.r * 1.5, 0, Math.PI * 2, false);
     ctx.fill();
-    /*ctx.fillStyle = 'tomato';
+
+    ctx.fillStyle = 'tomato';
+    ctx.shadowColor = 'tomato';
+    ctx.shadowBlur = 5;
     ctx.beginPath();
-    ctx.arc(ship.x, ship.y, ship.r * 1.4, 0, Math.PI * 2, false);
+    ctx.arc(ship.x, ship.y, ship.r * 1.2, 0, Math.PI * 2, false);
     ctx.fill();
+
     ctx.fillStyle = 'orange';
+    ctx.shadowColor = 'orange';
+    ctx.shadowBlur = 15;
     ctx.beginPath();
-    ctx.arc(ship.x, ship.y, ship.r * 1.1, 0, Math.PI * 2, false);
+    ctx.arc(ship.x, ship.y, ship.r * 0.9, 0, Math.PI * 2, false);
     ctx.fill();
+
     ctx.fillStyle = 'gold';
-    ctx.beginPath();
-    ctx.arc(ship.x, ship.y, ship.r * 0.8, 0, Math.PI * 2, false);
-    ctx.fill();
-    ctx.fillStyle = 'wheat';
+    ctx.shadowColor = 'gold';
+    ctx.shadowBlur = 15;
     ctx.beginPath();
     ctx.arc(ship.x, ship.y, ship.r * 0.5, 0, Math.PI * 2, false);
-    ctx.fill();*/
+    ctx.fill();
+
+    ctx.fillStyle = 'wheat';
+    ctx.shadowColor = 'wheat';
+    ctx.shadowBlur = 15;
+    ctx.beginPath();
+    ctx.arc(ship.x, ship.y, ship.r * 0.2, 0, Math.PI * 2, false);
+    ctx.fill();
   }
 
   // show ship's collision circle
@@ -339,20 +362,26 @@ function update() {
   //DRAW the lasers
   for (let i = 0; i < ship.lasers.length; i++) {
     if (ship.lasers[i].explodeTime == 0) {
-      ctx.fillStyle = 'greenyellow';
+      ctx.fillStyle = 'lightgreen';
+      ctx.strokeStyle = 'green';
+      ctx.lineWidth = SHIP_SIZE / 10;
       ctx.beginPath();
+
       ctx.arc(
         ship.lasers[i].x,
         ship.lasers[i].y,
-        SHIP_SIZE / 15,
+        SHIP_SIZE / 25,
         0,
         Math.PI * 2,
         false
       );
+      ctx.stroke();
       ctx.fill();
     } else {
       //DRAW the explosion
       ctx.fillStyle = 'tamato';
+      ctx.shadowColor = 'red';
+      ctx.shadowBlur = 5;
       ctx.beginPath();
       ctx.arc(
         ship.lasers[i].x,
@@ -365,6 +394,7 @@ function update() {
       ctx.fill();
 
       ctx.fillStyle = 'orange';
+      ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.arc(
         ship.lasers[i].x,
@@ -377,6 +407,7 @@ function update() {
       ctx.fill();
 
       ctx.fillStyle = 'gold';
+      ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.arc(
         ship.lasers[i].x,
