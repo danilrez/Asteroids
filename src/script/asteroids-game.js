@@ -20,16 +20,62 @@ const SHIP_INV_DUR = 3; // duration of the ship's invisibility in seconds
 const SHIP_SIZE = 30; // ship height in pixels
 const SHIP_THRUST = 5; // acceleration of the ship in pixels per second per second
 const SHIP_TURN_SPD = 360; // turn speed in degrees per second
-const SHOW_BOUNDING = false; // show or hide collision bounding
-const SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
-const MUSIC_ON = true;
-const SOUND_ON = true;
+let SHOW_BOUNDING = false; // show or hide collision bounding
+let SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
+let MUSIC_ON = false;
+let SOUND_ON = false;
 const TEXT_FADE_TIME = 2.5; // text fade time in seconds
 const TEXT_SIZE = 40; // text font height in pixels
 
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+
+////MENU onClick =>>
+document.querySelector('#btn_sound').addEventListener('click', soundOn);
+document.querySelector('#btn_music').addEventListener('click', musicOn);
+document.querySelector('#btn_center_dot').addEventListener('click', centreDor);
+document
+  .querySelector('#btn_collision_bounding')
+  .addEventListener('click', collisionBounding);
+
+async function soundOn() {
+  if (SOUND_ON) {
+    SOUND_ON = false;
+    document.querySelector('#btn_s').className = 'fas fa-volume-mute';
+  } else {
+    SOUND_ON = true;
+    document.querySelector('#btn_s').className = 'fas fa-volume-up';
+  }
+}
+async function musicOn() {
+  if (MUSIC_ON) {
+    document.querySelector('#btn_m').className = 'fas fa-music off';
+    MUSIC_ON = false;
+  } else {
+    document.querySelector('#btn_m').className = 'fas fa-music on';
+    MUSIC_ON = true;
+  }
+}
+async function centreDor() {
+  if (SHOW_CENTRE_DOT) {
+    SHOW_CENTRE_DOT = false;
+    document.querySelector('#btn_cd').className = 'far fa-dot-circle off';
+  } else {
+    SHOW_CENTRE_DOT = true;
+    document.querySelector('#btn_cd').className = 'far fa-dot-circle on';
+  }
+}
+async function collisionBounding() {
+  if (SHOW_BOUNDING) {
+    SHOW_BOUNDING = false;
+    document.querySelector('#btn_cb').className = 'fas fa-expand off';
+  } else {
+    SHOW_BOUNDING = true;
+    document.querySelector('#btn_cb').className = 'fas fa-expand on';
+  }
+}
+////MENU onClick <<=
 
 // setup sound effects
 let fxlaser = new Sound('../../src/sounds/laser.m4a', 5, 0.25);
@@ -152,7 +198,7 @@ function explodeShip() {
 function gameOver() {
   ship.dead = true;
   text = 'Game Over';
-  textAlpha = 1.0;
+  textAlpha = 3.0;
 }
 
 function keyDown(/** @type {KeyboardEvent} */ ev) {
@@ -241,7 +287,7 @@ function newGame() {
 
 function newLevel() {
   text = `Level ${level + 1}`;
-  textAlpha = 1.0;
+  textAlpha = 2.0;
   createAsteroidBelt();
 }
 
@@ -383,7 +429,7 @@ function update() {
 
     // show asteroid's collision circle
     if (SHOW_BOUNDING) {
-      ctx.strokeStyle = 'lightgreen';
+      ctx.strokeStyle = 'greenyellow';
       ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.arc(x, y, r * 1.1, 0, Math.PI * 2, false);
@@ -651,7 +697,7 @@ function update() {
 
   // show ship's collision circle
   if (SHOW_BOUNDING) {
-    ctx.strokeStyle = 'lightgreen';
+    ctx.strokeStyle = 'greenyellow';
     ctx.beginPath();
     ctx.arc(ship.x, ship.y, ship.r * 1.2, 0, Math.PI * 2, false);
     ctx.stroke();
