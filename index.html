@@ -1,40 +1,39 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css"
-    />
-    <link rel="stylesheet" href="src/style/style.css" />
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>ASTEROIDS</title>
-  </head>
+	<link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css" />
+	<link rel="stylesheet" href="src/style/style.css" />
 
-  <body>
-    <div class="asteroids-game-div">
-      <div class="top-menu">
-        <button id="btn_1">
-          Asteroids (remake of original 1979 Atari game)
-        </button>
-        <button id="btn_1_1"></button>
-        <button id="btn_sound">
-          <i id="btn_s" class="fas fa-volume-mute"></i>
-        </button>
-        <button id="btn_music"><i id="btn_m" class="fas fa-music"></i></button>
-        <button id="btn_center_dot">
-          <i id="btn_cd" class="far fa-dot-circle"></i>
-        </button>
-        <button id="btn_collision_bounding">
-          <i id="btn_cb" class="fas fa-expand"></i>
-        </button>
-      </div>
-      <canvas id="gameCanvas" width="800" height="600"></canvas>
-    </div>
+	<title>ASTEROIDS</title>
+</head>
 
-    <script src="src/script/asteroids-game.js"></script>
-  </body>
+<body>
+	<div class="asteroids-game-div">
+		<div class="top-menu">
+			<div class="div_info">
+				Asteroids (remake of original 1979 Atari game)
+			</div>
+			<button id="btn_sound">
+				<i id="btn_s" class="fas fa-volume-mute"></i>
+			</button>
+			<button id="btn_music"><i id="btn_m" class="fas fa-music"></i></button>
+			<button id="btn_center_dot">
+				<i id="btn_cd" class="far fa-dot-circle"></i>
+			</button>
+			<button id="btn_collision_bounding">
+				<i id="btn_cb" class="fas fa-expand"></i>
+			</button>
+		</div>
+		<canvas id="gameCanvas" width="800" height="600"></canvas>
+	</div>
+
+	<script src="src/script/asteroids-game.js"></script>
+</body>
+
+</html>
 </html>
