@@ -4,12 +4,77 @@ body {
 }
 
 .asteroids-game-div {
+  display: block;
+}
+
+.top-menu {
   display: flex;
   justify-content: center;
-  margin-top: auto;
+  width: 804px;
+  margin: auto;
+  margin-bottom: 0.5%;
+}
+
+.top-menu #btn_1 {
+  width: 304px;
+  outline: none;
+  border: 0;
+  background: rgb(10, 10, 10);
+  color: gray;
+  text-align: left;
+  font-size: 80%;
+  font-weight: bold;
+}
+
+.top-menu #btn_1_1 {
+  width: 300px;
+  outline: none;
+  border: 0;
+  background: rgb(10, 10, 10);
+  color: gray;
+  font-size: larger;
+}
+
+.top-menu #btn_sound,
+.top-menu #btn_music,
+.top-menu #btn_center_dot,
+.top-menu #btn_collision_bounding {
+  width: 50px;
+  outline: none;
+  border: 0;
+  background: rgb(10, 10, 10);
+  color: gray;
+  font-size: 14px;
+}
+
+.top-menu button:active,
+.top-menu button:focus {
+  outline: none;
+  border: 0;
 }
 
 #gameCanvas {
   display: flex;
+  margin: auto;
   border: 2px solid dimgray;
+}
+
+.off {
+  color: dimgray;
+}
+.on {
+  color: rgb(245, 245, 245);
+}
+
+.fa-volume-up {
+  color: rgb(245, 245, 245);
+}
+
+.on:hover,
+.off:hover,
+.fa-volume-up:hover,
+.fa-volume-mute:hover {
+  outline: none;
+  border: 0;
+  color: gold;
 }
