@@ -15,24 +15,15 @@ body {
   margin-bottom: 0.5%;
 }
 
-.top-menu #btn_1 {
-  width: 304px;
+.div_info {
+  width: 604px;
   outline: none;
   border: 0;
   background: rgb(10, 10, 10);
   color: gray;
   text-align: left;
-  font-size: 80%;
+  font-size: 100%;
   font-weight: bold;
-}
-
-.top-menu #btn_1_1 {
-  width: 300px;
-  outline: none;
-  border: 0;
-  background: rgb(10, 10, 10);
-  color: gray;
-  font-size: larger;
 }
 
 .top-menu #btn_sound,
@@ -40,11 +31,13 @@ body {
 .top-menu #btn_center_dot,
 .top-menu #btn_collision_bounding {
   width: 50px;
+  padding: 3px;
   outline: none;
   border: 0;
   background: rgb(10, 10, 10);
   color: gray;
   font-size: 14px;
+  text-align: right;
 }
 
 .top-menu button:active,
@@ -73,7 +66,10 @@ body {
 .on:hover,
 .off:hover,
 .fa-volume-up:hover,
-.fa-volume-mute:hover {
+.fa-volume-mute:hover,
+.fa-music:hover,
+.fa-dot-circle:hover,
+.fa-expand:hover {
   outline: none;
   border: 0;
   color: gold;
