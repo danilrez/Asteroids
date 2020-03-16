@@ -78,16 +78,13 @@ async function collisionBounding() {
 ////MENU onClick <<=
 
 // setup sound effects
-let fxlaser = new Sound('../../src/sounds/laser.m4a', 5, 0.25);
-let fxThrust = new Sound('../../src/sounds/thrust.m4a');
-let fxHit = new Sound('../../src/sounds/hit.m4a', 5);
-let fxExplode = new Sound('../../src/sounds/explode.m4a');
+let fxlaser = new Sound('src/sounds/laser.m4a', 5, 0.25);
+let fxThrust = new Sound('src/sounds/thrust.m4a');
+let fxHit = new Sound('src/sounds/hit.m4a', 5);
+let fxExplode = new Sound('src/sounds/explode.m4a');
 
 // setup the music
-let music = new Music(
-  '../../src/sounds/music-low.m4a',
-  '../../src/sounds/music-high.m4a'
-);
+let music = new Music('src/sounds/music-low.m4a', 'src/sounds/music-high.m4a');
 let roidsLeft, roidsTotal;
 
 // setup the game parametrs
