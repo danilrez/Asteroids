@@ -843,6 +843,7 @@ function update() {
       ship.lasers[i].y = 0;
     }
   }
+
   // MOVE the ASTEROIDS
   for (let i = 0; i < roids.length; i++) {
     roids[i].x += roids[i].xv;
