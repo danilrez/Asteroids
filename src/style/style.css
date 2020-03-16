@@ -11,4 +11,5 @@ body {
 
 #gameCanvas {
   display: flex;
+  border: 2px solid dimgray;
 }
