@@ -1,4 +1,7 @@
 # Asteroids
+
 Asteroids (1979 Atari game)
 
-in process
+Beta v0.5.0
+
+Release v1.0.0
