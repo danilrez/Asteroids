@@ -1,6 +1,6 @@
 const FPS = 30; // frames per second
 const FRICTION = 0.7; // friction coefficient of space (0 = no friction, 1 = lots of friction)
-const GAME_LIVES = 1; // starting number of lives
+const GAME_LIVES = 3; // starting number of lives
 const LASER_DIST = 0.6; // max distance laser can travel as fraction of screen width
 const LASER_EXPLODE_DUR = 0.1; // duration of the lasers' explosion in seconds
 const LASER_MAX = 10; // maximum number of lasers on screen at once
@@ -587,16 +587,20 @@ function update() {
   } else if (ship.dead) {
     const modal = document.getElementById('modal');
     const closeModal = document.getElementById('close');
+    const container = document.getElementById('container');
     modal.style.display = 'flex';
+    container.classList.add('blur-bg');
 
     closeModal.onclick = function() {
       modal.style.display = 'none';
+      container.classList.remove('blur-bg');
       newGame();
     };
 
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = 'none';
+        container.classList.remove('blur-bg');
         newGame();
       }
     };
