@@ -193,9 +193,35 @@ function explodeShip() {
 }
 
 function gameOver() {
+<<<<<<< HEAD
 	ship.dead = true;
 	text = 'Game Over';
 	textAlpha = 3.0;
+=======
+  ship.dead = true;
+  //text = 'Game Over';
+  //textAlpha = 3.0;
+
+  const modal = document.getElementById('modal');
+  const closeModal = document.getElementById('close');
+  const fullscreen = document.getElementById('fullscreen-body');
+  modal.style.display = 'flex';
+  fullscreen.classList.add('blur-bg');
+
+  closeModal.onclick = function() {
+    modal.style.display = 'none';
+    fullscreen.classList.remove('blur-bg');
+    newGame();
+  };
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+      fullscreen.classList.remove('blur-bg');
+      newGame();
+    }
+  };
+>>>>>>> dev
 }
 
 function keyDown(/** @type {KeyboardEvent} */ ev) {
@@ -380,6 +406,7 @@ function Sound(src, maxStreams = 1, vol = 0.5) {
 
 ////////////////////////////////////////////////////////////////////////
 function update() {
+<<<<<<< HEAD
 	const blinkOn = ship.blinkNum % 2 == 0;
 	const exploding = ship.explodeTime > 0;
 
@@ -904,6 +931,525 @@ function update() {
 		}
 	}
 }
+=======
+  const blinkOn = ship.blinkNum % 2 == 0;
+  const exploding = ship.explodeTime > 0;
+
+  // tick the music
+  music.tick();
+
+  //// DRAW space =>>
+  const gradientBG = ctx.createRadialGradient(400, 300, 50, 400, 300, 450);
+  gradientBG.addColorStop(1, 'rgb(10, 10, 15)');
+  gradientBG.addColorStop(0.7, 'rgb(10, 10, 15)');
+  gradientBG.addColorStop(0, 'rgb(20, 20, 27)');
+
+  ctx.fillStyle = gradientBG;
+
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  //// DRAW space <<=
+
+  //// DRAW the asteroids =>>
+  let a, r, x, y, offs, vert;
+  for (let i = 0; i < roids.length; i++) {
+    ctx.strokeStyle = 'slategray';
+    ctx.shadowBlur = 0;
+    ctx.lineWidth = SHIP_SIZE / 20;
+    // get the asteroid properties
+    a = roids[i].a;
+    r = roids[i].r;
+    x = roids[i].x;
+    y = roids[i].y;
+    offs = roids[i].offs;
+    vert = roids[i].vert;
+
+    // DRAW the path
+    ctx.beginPath();
+    ctx.moveTo(x + r * offs[0] * Math.cos(a), y + r * offs[0] * Math.sin(a));
+
+    // DRAW the polygon
+    for (let j = 1; j < vert; j++) {
+      ctx.lineTo(
+        x + r * offs[j] * Math.cos(a + (j * Math.PI * 2) / vert),
+        y + r * offs[j] * Math.sin(a + (j * Math.PI * 2) / vert)
+      );
+    }
+    ctx.closePath();
+    ctx.stroke();
+
+    // show asteroid's collision circle
+    if (SHOW_BOUNDING) {
+      ctx.strokeStyle = 'greenyellow';
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.arc(x, y, r * 1.1, 0, Math.PI * 2, false);
+      ctx.stroke();
+    }
+  }
+  //// DRAW the asteroids <<=
+
+  /////////////////////////////////////////////////////////
+  //==> TOP MENU <<=//
+  // BG for MENU
+  ctx.fillStyle = 'rgba(10, 10 , 15, 0.75)';
+  ctx.strokeStyle = 'rgb(130, 140, 150)';
+  ctx.lineWidth = SHIP_SIZE / 15;
+  ctx.beginPath();
+  ctx.fillRect(0, 0, canvas.width, SHIP_SIZE * 1.75);
+  ctx.moveTo(0, SHIP_SIZE * 1.75);
+  ctx.lineTo(canvas.width, SHIP_SIZE * 1.75);
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // DRAW the level
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgb(130, 140, 150)';
+  ctx.font = `${TEXT_SIZE * 0.3}px Fira Code Medium`;
+  ctx.fillText('level: ' + (level + 1), canvas.width / 2, SHIP_SIZE * 0.6);
+  ctx.shadowBlur = 0;
+  textAlpha -= 1.0 / TEXT_FADE_TIME / FPS;
+
+  // DRAW the score
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // colorize score
+  if (score < 100) {
+    ctx.fillStyle = 'rgb(55, 65, 80)';
+  } else if (100 <= score && score < 500) {
+    ctx.fillStyle = '130, 140, 150';
+  } else if (500 <= score && score < 1000) {
+    ctx.fillStyle = 'white';
+  } else if (1000 <= score && score < 2500) {
+    ctx.fillStyle = 'wheat';
+  } else if (2500 <= score && score < 5000) {
+    ctx.fillStyle = 'gold';
+  } else if (5000 <= score && score < 7500) {
+    ctx.fillStyle = 'orange';
+  } else if (7500 <= score && score < 10000) {
+    ctx.fillStyle = 'tomato';
+  } else if (10000 <= score && score < 1000000) {
+    ctx.fillStyle = 'blueviolet';
+  }
+  ctx.shadowBlur = 0;
+  ctx.font = `${TEXT_SIZE * 0.45}px Fira Code`;
+  ctx.fillText('SCORE ' + score, canvas.width / 2, SHIP_SIZE * 1.2);
+  ctx.shadowBlur = 0;
+  textAlpha -= 1.0 / TEXT_FADE_TIME / FPS;
+
+  //// DRAW the HIGH score ==>
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgb(130, 140, 150)';
+  ctx.font = `${TEXT_SIZE * 0.75}px Fira Code Light`;
+  textAlpha -= 1.0 / TEXT_FADE_TIME / FPS;
+  // add '0'
+  let addZero = '0';
+  switch (String(scoreHigh).length) {
+    case 0:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(8) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+    case 1:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(7) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      ctx.fillStyle = 'red';
+      break;
+    case 2:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(6) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+    case 3:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(5) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+    case 4:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(4) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+    case 5:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(3) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+    case 6:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(2) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+    case 7:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(1) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+    case 8:
+      ctx.fillText(
+        'HIGH ' + addZero.repeat(0) + scoreHigh,
+        canvas.width - SHIP_SIZE / 2,
+        SHIP_SIZE
+      );
+      break;
+  }
+  //// <<=
+
+  // DRAW the  LIVES
+  let lifeColour;
+  for (let i = 0; i < lives; i++) {
+    lifeColour = exploding && i == lives - 1 ? 'tomato' : 'rgb(130, 140, 150)';
+    drawShip(
+      SHIP_SIZE + i * SHIP_SIZE * 1.25,
+      SHIP_SIZE,
+      0.5 * Math.PI,
+      lifeColour
+    );
+    ctx.shadowBlur = 0;
+  }
+
+  // DRAW the game TEXT (LEVELS)
+  if (textAlpha >= 0) {
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = `rgba(255, 255, 255, ${textAlpha})`;
+    ctx.font = `small-caps ${TEXT_SIZE}px Fira Code Medium`;
+    ctx.fillText(text, canvas.width / 2, canvas.height * 0.15);
+    textAlpha -= 1.0 / TEXT_FADE_TIME / FPS;
+  }
+  /////////////////////////////////////////////////////////
+
+  //// thrust the ship
+  if (ship.thrusting && !ship.dead) {
+    ship.thrust.x += (SHIP_THRUST * Math.cos(ship.a)) / FPS;
+    ship.thrust.y -= (SHIP_THRUST * Math.sin(ship.a)) / FPS;
+    fxThrust.play();
+
+    // DRAW the thruster
+    if (!exploding && blinkOn) {
+      ctx.shadowColor = 'red';
+      ctx.shadowBlur = 10;
+
+      ctx.fillStyle = 'tomato';
+      ctx.strokeStyle = 'gold';
+      ctx.lineWidth = SHIP_SIZE / 10;
+      ctx.beginPath();
+      ctx.moveTo(
+        // rear left
+        ship.x -
+          ship.r * ((5 / 4.5) * Math.cos(ship.a) + 0.5 * Math.sin(ship.a)),
+        ship.y +
+          ship.r * ((5 / 4.5) * Math.sin(ship.a) - 0.5 * Math.cos(ship.a))
+      );
+      ctx.lineTo(
+        // rear centre (behind the ship)
+        ship.x - ((ship.r * 5) / 2.5) * Math.cos(ship.a),
+        ship.y + ((ship.r * 5) / 2.5) * Math.sin(ship.a)
+      );
+      ctx.lineTo(
+        // rear right
+        ship.x -
+          ship.r * ((5 / 4.5) * Math.cos(ship.a) - 0.5 * Math.sin(ship.a)),
+        ship.y +
+          ship.r * ((5 / 4.5) * Math.sin(ship.a) + 0.5 * Math.cos(ship.a))
+      );
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+  } else {
+    // apply friction (slow the ship down when not thrusting)
+    ship.thrust.x -= (FRICTION * ship.thrust.x) / FPS;
+    ship.thrust.y -= (FRICTION * ship.thrust.y) / FPS;
+    fxThrust.stop();
+  }
+
+  //// DRAW the SHIP =>>
+  if (!exploding) {
+    if (blinkOn && !ship.dead) {
+      drawShip(ship.x, ship.y, ship.a);
+    }
+
+    // handle blinking
+    if (ship.blinkNum > 0) {
+      // reduce the blink time
+      ship.blinkTime--;
+
+      // reduce the blink num
+      if (ship.blinkTime == 0) {
+        ship.blinkTime = Math.ceil(SHIP_BLINK_DUR * FPS);
+        ship.blinkNum--;
+        ctx.shadowBlur = 0;
+      }
+    }
+  }
+
+  // DRAW the explosion (concentric circles of different colours)
+  else {
+    ctx.fillStyle = 'darkred';
+    ctx.shadowColor = 'darkred';
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(ship.x, ship.y, ship.r * 1.5, 0, Math.PI * 2, false);
+    ctx.fill();
+
+    ctx.fillStyle = 'tomato';
+    ctx.shadowColor = 'tomato';
+    ctx.shadowBlur = 5;
+    ctx.beginPath();
+    ctx.arc(ship.x, ship.y, ship.r * 1.2, 0, Math.PI * 2, false);
+    ctx.fill();
+
+    ctx.fillStyle = 'orange';
+    ctx.shadowColor = 'orange';
+    ctx.shadowBlur = 15;
+    ctx.beginPath();
+    ctx.arc(ship.x, ship.y, ship.r * 0.9, 0, Math.PI * 2, false);
+    ctx.fill();
+
+    ctx.fillStyle = 'gold';
+    ctx.shadowColor = 'gold';
+    ctx.shadowBlur = 15;
+    ctx.beginPath();
+    ctx.arc(ship.x, ship.y, ship.r * 0.5, 0, Math.PI * 2, false);
+    ctx.fill();
+
+    ctx.fillStyle = 'wheat';
+    ctx.shadowColor = 'wheat';
+    ctx.shadowBlur = 15;
+    ctx.beginPath();
+    ctx.arc(ship.x, ship.y, ship.r * 0.2, 0, Math.PI * 2, false);
+    ctx.fill();
+  }
+
+  // show ship's collision circle
+  if (SHOW_BOUNDING) {
+    ctx.strokeStyle = 'greenyellow';
+    ctx.beginPath();
+    ctx.arc(ship.x, ship.y, ship.r * 1.2, 0, Math.PI * 2, false);
+    ctx.stroke();
+  }
+
+  // show ship's centre dot
+  if (SHOW_CENTRE_DOT) {
+    ctx.fillStyle = 'tomato';
+    ctx.fillRect(ship.x - 1, ship.y - 1, 2, 2);
+  }
+
+  // DRAW the LASERS
+  for (let i = 0; i < ship.lasers.length; i++) {
+    if (ship.lasers[i].explodeTime == 0) {
+      ctx.fillStyle = 'lightgreen';
+      ctx.strokeStyle = 'green';
+      ctx.lineWidth = SHIP_SIZE / 10;
+      ctx.beginPath();
+
+      ctx.arc(
+        ship.lasers[i].x,
+        ship.lasers[i].y,
+        SHIP_SIZE / 25,
+        0,
+        Math.PI * 2,
+        false
+      );
+      ctx.stroke();
+      ctx.fill();
+    } else {
+      //DRAW the explosion
+      ctx.fillStyle = 'tomato';
+      ctx.shadowColor = 'red';
+      ctx.shadowBlur = 5;
+      ctx.beginPath();
+      ctx.arc(
+        ship.lasers[i].x,
+        ship.lasers[i].y,
+        ship.r * 0.95,
+        0,
+        Math.PI * 2,
+        false
+      );
+      ctx.fill();
+
+      ctx.fillStyle = 'orange';
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.arc(
+        ship.lasers[i].x,
+        ship.lasers[i].y,
+        ship.r * 0.75,
+        0,
+        Math.PI * 2,
+        false
+      );
+      ctx.fill();
+
+      ctx.fillStyle = 'gold';
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.arc(
+        ship.lasers[i].x,
+        ship.lasers[i].y,
+        ship.r * 0.35,
+        0,
+        Math.PI * 2,
+        false
+      );
+      ctx.fill();
+    }
+  }
+
+  // detect laser hits on asteroids
+  let ax, ay, ar, lx, ly;
+  for (let i = roids.length - 1; i >= 0; i--) {
+    // grab the asteroid properties
+    ax = roids[i].x;
+    ay = roids[i].y;
+    ar = roids[i].r;
+
+    // loop over the lasers
+    for (let j = ship.lasers.length - 1; j >= 0; j--) {
+      // grab the laser properties
+      lx = ship.lasers[j].x;
+      ly = ship.lasers[j].y;
+
+      // detect hits
+      if (
+        ship.lasers[j].explodeTime == 0 &&
+        distBetweenPoints(ax, ay, lx, ly) < ar
+      ) {
+        // destroy the asteroid and activate the laser explosion
+        destroyAsteroid(i);
+        ship.lasers[j].explodeTime = Math.ceil(LASER_EXPLODE_DUR * FPS);
+
+        break;
+      }
+    }
+  }
+
+  // check for asteroid collisions (when not exploding)
+  if (!exploding) {
+    // only check when not blinking
+    if (ship.blinkNum == 0 && !ship.dead) {
+      for (let i = 0; i < roids.length; i++) {
+        if (
+          distBetweenPoints(ship.x, ship.y, roids[i].x, roids[i].y) <
+          ship.r + roids[i].r
+        ) {
+          explodeShip();
+          destroyAsteroid(i);
+          break;
+        }
+      }
+    }
+
+    // rotate the ship
+    ship.a += ship.rot;
+
+    // move the ship
+    ship.x += ship.thrust.x;
+    ship.y += ship.thrust.y;
+  } else {
+    // reduce the explode time
+    ship.explodeTime--;
+
+    // reset the ship after the explosion has finished
+    if (ship.explodeTime == 0) {
+      lives--;
+      if (lives == 0) {
+        gameOver();
+      } else {
+        ship = newShip();
+      }
+    }
+  }
+
+  // handle edge of screen
+  if (ship.x < 0 - ship.r) {
+    ship.x = canvas.width + ship.r;
+  } else if (ship.x > canvas.width + ship.r) {
+    ship.x = 0 - ship.r;
+  }
+  if (ship.y < 0 - ship.r) {
+    ship.y = canvas.height + ship.r;
+  } else if (ship.y > canvas.height + ship.r) {
+    ship.y = 0 - ship.r;
+  }
+
+  // MOVE the LASERS
+  for (let i = ship.lasers.length - 1; i >= 0; i--) {
+    //check distance travel
+    if (ship.lasers[i].dist > LASER_DIST * canvas.width) {
+      ship.lasers.splice(i, 1);
+      continue;
+    }
+
+    //handle the explosion
+    if (ship.lasers[i].explodeTime > 0) {
+      ship.lasers[i].explodeTime--;
+
+      //destroy the laser after the duration is up
+      if (ship.lasers[i].explodeTime == 0) {
+        ship.lasers.splice(i, 1);
+        continue;
+      }
+    } else {
+      //move the laser
+      ship.lasers[i].x += ship.lasers[i].xv;
+      ship.lasers[i].y += ship.lasers[i].yv;
+
+      //calculate the distance tracelled
+      ship.lasers[i].dist += Math.sqrt(
+        Math.pow(ship.lasers[i].xv, 2) + Math.pow(ship.lasers[i].yv, 2)
+      );
+    }
+
+    //handle edge of screen
+    if (ship.lasers[i].x < 0) {
+      ship.lasers[i].x = canvas.width;
+    } else if (ship.lasers[i].x > canvas.width) {
+      ship.lasers[i].x = 0;
+    }
+
+    if (ship.lasers[i].y < 0) {
+      ship.lasers[i].y = canvas.height;
+    } else if (ship.lasers[i].y > canvas.height) {
+      ship.lasers[i].y = 0;
+    }
+  }
+  // MOVE the ASTEROIDS
+  for (let i = 0; i < roids.length; i++) {
+    roids[i].x += roids[i].xv;
+    roids[i].y += roids[i].yv;
+
+    // handle asteroid edge of screen
+    if (roids[i].x < 0 - roids[i].r) {
+      roids[i].x = canvas.width + roids[i].r;
+    } else if (roids[i].x > canvas.width + roids[i].r) {
+      roids[i].x = 0 - roids[i].r;
+    }
+    if (roids[i].y < 0 - roids[i].r) {
+      roids[i].y = canvas.height + roids[i].r;
+    } else if (roids[i].y > canvas.height + roids[i].r) {
+>>>>>>> dev
       roids[i].y = 0 - roids[i].r;
     }
   }

@@ -1,9 +1,77 @@
 <html lang="en">
+<<<<<<< HEAD
 
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+=======
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css"
+    />
+    <link rel="stylesheet" href="src/style/style.css" />
+
+    <title>ASTEROIDS</title>
+  </head>
+
+  <body>
+    <div class="asteroids-game-div">
+      <selection class="fullscreen">
+        <div id="fullscreen-body" class="fullscreen-body">
+          <div class="container">
+            <div class="top-menu">
+              <div class="menu-info">
+                Asteroids (remake of original 1979 Atari game)
+              </div>
+              <div class="menu-buttons">
+                <button id="btn_sound">
+                  <i
+                    title="Sound ON/OFF"
+                    id="btn_s"
+                    class="fas fa-volume-mute"
+                  ></i>
+                </button>
+                <button id="btn_music">
+                  <i title="Music ON/OFF" id="btn_m" class="fas fa-music"></i>
+                </button>
+                <button id="btn_center_dot">
+                  <i
+                    title="Center dot ON/OFF"
+                    id="btn_cd"
+                    class="far fa-dot-circle"
+                  ></i>
+                </button>
+                <button id="btn_collision_bounding">
+                  <i
+                    title="Collision bounding ON/OFF"
+                    id="btn_cb"
+                    class="fas fa-expand"
+                  ></i>
+                </button>
+              </div>
+            </div>
+
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+          </div>
+        </div>
+        <div class="modal" id="modal">
+          <div class="modal-content" id="close">
+            <h3>
+              <strong>GAME OVER</strong>
+            </h3>
+            <p>Click anywhere to start new game</p>
+          </div>
+        </div>
+      </selection>
+    </div>
+>>>>>>> dev
 
 	<link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css" />
