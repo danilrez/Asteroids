@@ -10,23 +10,21 @@
 html,
 body {
   height: 100%;
-  background-color: rgb(10, 10, 10);
-  color: gray;
+  color: rgb(130, 140, 150);
 }
-
 .asteroids-game-div {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-
 .fullscreen {
   min-height: 100vh;
   display: flex;
+  background: rgba(10, 10, 15);
 }
-
 .fullscreen-body {
-  background-color: rgb(10, 10, 10);
+  background: url('../img/bg_stars.png') center, rgba(15, 15, 25, 0.3);
+  background-blend-mode: screen;
   flex: 1 1 auto;
   width: 100%;
   min-width: 400px;
@@ -37,29 +35,26 @@ body {
   justify-content: center;
   padding: 0px 20px;
 }
+.blur-bg {
+  filter: blur(4px);
+}
 
 .container {
   display: grid;
   text-align: center;
   justify-content: center;
 }
-
-.blur-bg {
-  filter: blur(3px);
-}
-
 .top-menu {
   min-width: 800px;
   font-weight: bold;
-  background-color: rgb(10, 10, 10);
+  background: rgba(10, 10, 15);
   display: flex;
   justify-content: space-between;
-  border: 2px solid dimgray;
+  border: 2px solid rgb(130, 140, 150);
   margin: auto 0 5;
 }
 .menu-info {
   padding: 0px 0px 0px 10px;
-  background: rgb(10, 10, 10);
   text-align: left;
   margin: auto 0;
   font-weight: bold;
@@ -69,7 +64,7 @@ body {
   text-align: center;
   flex-direction: column;
   justify-content: center;
-  border-left: 2px solid dimgray;
+  border-left: 2px solid rgb(130, 140, 150);
 }
 .top-menu #btn_sound,
 .top-menu #btn_music,
@@ -79,17 +74,17 @@ body {
   padding: 5px;
   outline: none;
   border: 0;
-  background: rgb(10, 10, 10);
-  color: gray;
+  background: transparent;
+  color: rgb(130, 140, 150);
   font-size: 16px;
   text-align: center;
 }
 .off {
-  color: dimgray;
+  color: rgb(130, 140, 150);
 }
 .on,
 .fa-volume-up {
-  color: rgb(245, 245, 245);
+  color: whitesmoke;
 }
 .on:hover,
 .off:hover,
@@ -101,6 +96,16 @@ body {
   outline: none;
   border: 0;
   color: gold;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: table;
+  margin: 0px auto;
 }
 .menu-buttons button:active,
 .menu-buttons button:focus {
@@ -110,13 +115,12 @@ body {
 
 #gameCanvas {
   align-self: center;
-  border: 2px solid dimgray;
+  border: 2px solid rgb(130, 140, 150);
   min-width: 800px;
   min-height: 600px;
 }
 
 /*Modal window for GAME OVER*/
-
 .modal {
   display: none;
   position: fixed;
@@ -125,30 +129,45 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(20, 20, 20, 0.5);
+  cursor: pointer;
+  animation: animate-bg 1.2s infinite ease-in-out;
+}
+@keyframes animate-bg {
+  0% {
+    background: rgba(10, 10, 15, 0.1);
+  }
+  50% {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(131, 58, 180, 0.05) 0%,
+      rgba(253, 29, 29, 0.05) 50%,
+      rgba(252, 176, 69, 0.05) 100%
+    );
+  }
+  100% {
+    background: rgba(10, 10, 15, 0.1);
+  }
 }
 
 .modal-content {
-  background: rgb(10, 10, 10, 0.7);
-  box-shadow: 0 0 20px rgba(30, 30, 30, 0.8);
+  background: rgb(10, 10, 15, 0.85);
+  box-shadow: 0 0 20px black;
   position: absolute;
   margin: 5px;
   top: 45%;
   left: 20%;
   right: 20%;
-  color: darkgrey;
+  color: darkgray;
   margin: auto;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 7px;
   max-width: 400px;
   max-height: 90px;
   text-align: center;
   cursor: pointer;
-  animation-name: animate;
-  animation-duration: 0.5s;
+  animation: animate 0.5s;
   font-family: Fira Code;
 }
-
 @keyframes animate {
   from {
     opacity: 0;

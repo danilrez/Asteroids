@@ -194,8 +194,28 @@ function explodeShip() {
 
 function gameOver() {
   ship.dead = true;
-  text = 'Game Over';
-  textAlpha = 3.0;
+  //text = 'Game Over';
+  //textAlpha = 3.0;
+
+  const modal = document.getElementById('modal');
+  const closeModal = document.getElementById('close');
+  const fullscreen = document.getElementById('fullscreen-body');
+  modal.style.display = 'flex';
+  fullscreen.classList.add('blur-bg');
+
+  closeModal.onclick = function() {
+    modal.style.display = 'none';
+    fullscreen.classList.remove('blur-bg');
+    newGame();
+  };
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+      fullscreen.classList.remove('blur-bg');
+      newGame();
+    }
+  };
 }
 
 function keyDown(/** @type {KeyboardEvent} */ ev) {
@@ -388,18 +408,19 @@ function update() {
 
   //// DRAW space =>>
   const gradientBG = ctx.createRadialGradient(400, 300, 50, 400, 300, 450);
-  gradientBG.addColorStop(1, 'rgb(10, 10, 10)');
-  gradientBG.addColorStop(0.7, 'rgb(10, 10, 10)');
-  gradientBG.addColorStop(0, 'rgb(20, 20, 20)');
+  gradientBG.addColorStop(1, 'rgb(10, 10, 15)');
+  gradientBG.addColorStop(0.7, 'rgb(10, 10, 15)');
+  gradientBG.addColorStop(0, 'rgb(20, 20, 27)');
 
   ctx.fillStyle = gradientBG;
+
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   //// DRAW space <<=
 
   //// DRAW the asteroids =>>
   let a, r, x, y, offs, vert;
   for (let i = 0; i < roids.length; i++) {
-    ctx.strokeStyle = 'dimgrey';
+    ctx.strokeStyle = 'slategray';
     ctx.shadowBlur = 0;
     ctx.lineWidth = SHIP_SIZE / 20;
     // get the asteroid properties
@@ -438,8 +459,8 @@ function update() {
   /////////////////////////////////////////////////////////
   //==> TOP MENU <<=//
   // BG for MENU
-  ctx.fillStyle = 'rgba(10, 10 , 10, 0.75)';
-  ctx.strokeStyle = 'dimgray';
+  ctx.fillStyle = 'rgba(10, 10 , 15, 0.75)';
+  ctx.strokeStyle = 'rgb(130, 140, 150)';
   ctx.lineWidth = SHIP_SIZE / 15;
   ctx.beginPath();
   ctx.fillRect(0, 0, canvas.width, SHIP_SIZE * 1.75);
@@ -451,7 +472,7 @@ function update() {
   // DRAW the level
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = 'dimgray';
+  ctx.fillStyle = 'rgb(130, 140, 150)';
   ctx.font = `${TEXT_SIZE * 0.3}px Fira Code Medium`;
   ctx.fillText('level: ' + (level + 1), canvas.width / 2, SHIP_SIZE * 0.6);
   ctx.shadowBlur = 0;
@@ -461,12 +482,10 @@ function update() {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   // colorize score
-  if (score < 10) {
-    ctx.fillStyle = 'dimgray';
-  } else if (10 <= score && score < 100) {
-    ctx.fillStyle = 'gray';
+  if (score < 100) {
+    ctx.fillStyle = 'rgb(55, 65, 80)';
   } else if (100 <= score && score < 500) {
-    ctx.fillStyle = 'darkgray';
+    ctx.fillStyle = '130, 140, 150';
   } else if (500 <= score && score < 1000) {
     ctx.fillStyle = 'white';
   } else if (1000 <= score && score < 2500) {
@@ -490,7 +509,7 @@ function update() {
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.shadowBlur = 0;
-  ctx.fillStyle = 'dimgray';
+  ctx.fillStyle = 'rgb(130, 140, 150)';
   ctx.font = `${TEXT_SIZE * 0.75}px Fira Code Light`;
   textAlpha -= 1.0 / TEXT_FADE_TIME / FPS;
   // add '0'
@@ -566,7 +585,7 @@ function update() {
   // DRAW the  LIVES
   let lifeColour;
   for (let i = 0; i < lives; i++) {
-    lifeColour = exploding && i == lives - 1 ? 'tomato' : 'dimgray';
+    lifeColour = exploding && i == lives - 1 ? 'tomato' : 'rgb(130, 140, 150)';
     drawShip(
       SHIP_SIZE + i * SHIP_SIZE * 1.25,
       SHIP_SIZE,
@@ -576,7 +595,7 @@ function update() {
     ctx.shadowBlur = 0;
   }
 
-  // DRAW the game TEXT
+  // DRAW the game TEXT (LEVELS)
   if (textAlpha >= 0) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -584,26 +603,6 @@ function update() {
     ctx.font = `small-caps ${TEXT_SIZE}px Fira Code Medium`;
     ctx.fillText(text, canvas.width / 2, canvas.height * 0.15);
     textAlpha -= 1.0 / TEXT_FADE_TIME / FPS;
-  } else if (ship.dead) {
-    const modal = document.getElementById('modal');
-    const closeModal = document.getElementById('close');
-    const container = document.getElementById('container');
-    modal.style.display = 'flex';
-    container.classList.add('blur-bg');
-
-    closeModal.onclick = function() {
-      modal.style.display = 'none';
-      container.classList.remove('blur-bg');
-      newGame();
-    };
-
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = 'none';
-        container.classList.remove('blur-bg');
-        newGame();
-      }
-    };
   }
   /////////////////////////////////////////////////////////
 
