@@ -16,22 +16,53 @@
 
   <body>
     <div class="asteroids-game-div">
-      <div class="top-menu">
-        <div class="div_info">
-          Asteroids (remake of original 1979 Atari game)
+      <selection class="fullscreen">
+        <div id="fullscreen-body" class="fullscreen-body">
+          <div class="container">
+            <div class="top-menu">
+              <div class="menu-info">
+                Asteroids (remake of original 1979 Atari game)
+              </div>
+              <div class="menu-buttons">
+                <button id="btn_sound">
+                  <i
+                    title="Sound ON/OFF"
+                    id="btn_s"
+                    class="fas fa-volume-mute"
+                  ></i>
+                </button>
+                <button id="btn_music">
+                  <i title="Music ON/OFF" id="btn_m" class="fas fa-music"></i>
+                </button>
+                <button id="btn_center_dot">
+                  <i
+                    title="Center dot ON/OFF"
+                    id="btn_cd"
+                    class="far fa-dot-circle"
+                  ></i>
+                </button>
+                <button id="btn_collision_bounding">
+                  <i
+                    title="Collision bounding ON/OFF"
+                    id="btn_cb"
+                    class="fas fa-expand"
+                  ></i>
+                </button>
+              </div>
+            </div>
+
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+          </div>
         </div>
-        <button id="btn_sound">
-          <i id="btn_s" class="fas fa-volume-mute"></i>
-        </button>
-        <button id="btn_music"><i id="btn_m" class="fas fa-music"></i></button>
-        <button id="btn_center_dot">
-          <i id="btn_cd" class="far fa-dot-circle"></i>
-        </button>
-        <button id="btn_collision_bounding">
-          <i id="btn_cb" class="fas fa-expand"></i>
-        </button>
-      </div>
-      <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="modal" id="modal">
+          <div class="modal-content" id="close">
+            <h3>
+              <strong>GAME OVER</strong>
+            </h3>
+            <p>Click anywhere to start new game</p>
+          </div>
+        </div>
+      </selection>
     </div>
 
     <script src="src/script/asteroids-game.js"></script>

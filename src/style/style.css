@@ -1,68 +1,91 @@
-body {
-  background: rgb(10, 10, 10);
-  background-blend-mode: screen;
-}
-
-.asteroids-game-div {
-  display: block;
-}
-
-.top-menu {
-  display: flex;
-  justify-content: center;
-  width: 804px;
-  margin: auto;
-  margin-bottom: 0.5%;
-}
-
-.div_info {
-  width: 604px;
-  outline: none;
+/*Clear stules*/
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
   border: 0;
-  background: rgb(10, 10, 10);
-  color: gray;
-  text-align: left;
-  font-size: 100%;
-  font-weight: bold;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  color: rgb(130, 140, 150);
+}
+.asteroids-game-div {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.fullscreen {
+  min-height: 100vh;
+  display: flex;
+  background: rgba(10, 10, 15);
+}
+.fullscreen-body {
+  background: url('../img/bg_stars.png') center, rgba(15, 15, 25, 0.3);
+  background-blend-mode: screen;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 400px;
+  margin: 0px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 20px;
+}
+.blur-bg {
+  filter: blur(4px);
 }
 
+.container {
+  display: grid;
+  text-align: center;
+  justify-content: center;
+}
+.top-menu {
+  min-width: 800px;
+  font-weight: bold;
+  background: rgba(10, 10, 15);
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid rgb(130, 140, 150);
+  margin: auto 0 5;
+}
+.menu-info {
+  padding: 0px 0px 0px 10px;
+  text-align: left;
+  margin: auto 0;
+  font-weight: bold;
+  min-width: 500px;
+}
+.menu-buttons {
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 2px solid rgb(130, 140, 150);
+}
 .top-menu #btn_sound,
 .top-menu #btn_music,
 .top-menu #btn_center_dot,
 .top-menu #btn_collision_bounding {
   width: 50px;
-  padding: 3px;
+  padding: 5px;
   outline: none;
   border: 0;
-  background: rgb(10, 10, 10);
-  color: gray;
-  font-size: 14px;
-  text-align: right;
+  background: transparent;
+  color: rgb(130, 140, 150);
+  font-size: 16px;
+  text-align: center;
 }
-
-.top-menu button:active,
-.top-menu button:focus {
-  outline: none;
-  border: 0;
-}
-
-#gameCanvas {
-  display: flex;
-  margin: auto;
-  border: 2px solid dimgray;
-}
-
 .off {
-  color: dimgray;
+  color: rgb(130, 140, 150);
 }
-.on {
-  color: rgb(245, 245, 245);
-}
-
+.on,
 .fa-volume-up {
-  color: rgb(245, 245, 245);
+  color: whitesmoke;
 }
-
 .on:hover,
 .off:hover,
 .fa-volume-up:hover,
@@ -73,4 +96,88 @@ body {
   outline: none;
   border: 0;
   color: gold;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: table;
+  margin: 0px auto;
+}
+.menu-buttons button:active,
+.menu-buttons button:focus {
+  outline: none;
+  border: 0;
+}
+
+#gameCanvas {
+  align-self: center;
+  border: 2px solid rgb(130, 140, 150);
+  min-width: 800px;
+  min-height: 600px;
+}
+
+/*Modal window for GAME OVER*/
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  animation: animate-bg 1.2s infinite ease-in-out;
+}
+@keyframes animate-bg {
+  0% {
+    background: rgba(10, 10, 15, 0.1);
+  }
+  50% {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(131, 58, 180, 0.05) 0%,
+      rgba(253, 29, 29, 0.05) 50%,
+      rgba(252, 176, 69, 0.05) 100%
+    );
+  }
+  100% {
+    background: rgba(10, 10, 15, 0.1);
+  }
+}
+
+.modal-content {
+  background: rgb(10, 10, 15, 0.85);
+  box-shadow: 0 0 20px black;
+  position: absolute;
+  margin: 5px;
+  top: 45%;
+  left: 20%;
+  right: 20%;
+  color: darkgray;
+  margin: auto;
+  padding: 20px;
+  border-radius: 7px;
+  max-width: 400px;
+  max-height: 90px;
+  text-align: center;
+  cursor: pointer;
+  animation: animate 0.5s;
+  font-family: Fira Code;
+}
+@keyframes animate {
+  from {
+    opacity: 0;
+    color: transparent;
+  }
+  50% {
+    opacity: 0;
+    color: transparent;
+  }
+  to {
+    opacity: 1;
+  }
 }
