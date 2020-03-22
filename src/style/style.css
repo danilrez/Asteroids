@@ -11,6 +11,8 @@ html,
 body {
   height: 100%;
   color: rgb(130, 140, 150);
+  background: url('../img/bg_stars.png') center, rgba(15, 15, 25, 0.3);
+  background-blend-mode: screen;
 }
 .asteroids-game-div {
   min-height: 100vh;
@@ -20,11 +22,8 @@ body {
 .fullscreen {
   min-height: 100vh;
   display: flex;
-  background: rgba(10, 10, 15);
 }
 .fullscreen-body {
-  background: url('../img/bg_stars.png') center, rgba(15, 15, 25, 0.3);
-  background-blend-mode: screen;
   flex: 1 1 auto;
   width: 100%;
   min-width: 400px;
