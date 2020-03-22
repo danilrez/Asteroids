@@ -11,6 +11,8 @@ html,
 body {
   height: 100%;
   color: rgb(130, 140, 150);
+  background: url('../img/bg_stars.png') center, rgba(15, 15, 25, 0.3);
+  background-blend-mode: screen;
 }
 .asteroids-game-div {
   min-height: 100vh;
@@ -20,11 +22,8 @@ body {
 .fullscreen {
   min-height: 100vh;
   display: flex;
-  background: rgba(10, 10, 15);
 }
 .fullscreen-body {
-  background: url('../img/bg_stars.png') center, rgba(15, 15, 25, 0.3);
-  background-blend-mode: screen;
   flex: 1 1 auto;
   width: 100%;
   min-width: 400px;
@@ -39,16 +38,6 @@ body {
   filter: blur(4px);
 }
 
-<<<<<<< HEAD
-.div_info {
-  width: 604px;
-  outline: none;
-  border: 0;
-  background: rgb(10, 10, 10);
-  color: gray;
-  text-align: left;
-  font-size: 100%;
-=======
 .container {
   display: grid;
   text-align: center;
@@ -67,34 +56,20 @@ body {
   padding: 0px 0px 0px 10px;
   text-align: left;
   margin: auto 0;
->>>>>>> dev
   font-weight: bold;
   min-width: 500px;
 }
-<<<<<<< HEAD
-
-=======
 .menu-buttons {
   text-align: center;
   flex-direction: column;
   justify-content: center;
   border-left: 2px solid rgb(130, 140, 150);
 }
->>>>>>> dev
 .top-menu #btn_sound,
 .top-menu #btn_music,
 .top-menu #btn_center_dot,
 .top-menu #btn_collision_bounding {
   width: 50px;
-<<<<<<< HEAD
-  padding: 3px;
-  outline: none;
-  border: 0;
-  background: rgb(10, 10, 10);
-  color: gray;
-  font-size: 14px;
-  text-align: right;
-=======
   padding: 5px;
   outline: none;
   border: 0;
@@ -102,7 +77,6 @@ body {
   color: rgb(130, 140, 150);
   font-size: 16px;
   text-align: center;
->>>>>>> dev
 }
 .off {
   color: rgb(130, 140, 150);
@@ -193,19 +167,6 @@ body {
   animation: animate 0.5s;
   font-family: Fira Code;
 }
-<<<<<<< HEAD
-
-.on:hover,
-.off:hover,
-.fa-volume-up:hover,
-.fa-volume-mute:hover,
-.fa-music:hover,
-.fa-dot-circle:hover,
-.fa-expand:hover {
-  outline: none;
-  border: 0;
-  color: gold;
-=======
 @keyframes animate {
   from {
     opacity: 0;
@@ -218,5 +179,4 @@ body {
   to {
     opacity: 1;
   }
->>>>>>> dev
 }
