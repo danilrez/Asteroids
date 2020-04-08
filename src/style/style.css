@@ -94,17 +94,7 @@ body {
 .fa-expand:hover {
   outline: none;
   border: 0;
-  color: gold;
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(131, 58, 180, 1) 0%,
-    rgba(253, 29, 29, 1) 50%,
-    rgba(252, 176, 69, 1) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: table;
-  margin: 0px auto;
+  color: rgb(130, 180, 255);
 }
 .menu-buttons button:active,
 .menu-buttons button:focus {
