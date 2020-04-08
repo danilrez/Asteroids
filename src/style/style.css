@@ -101,6 +101,7 @@ body {
     rgba(253, 29, 29, 1) 50%,
     rgba(252, 176, 69, 1) 100%
   );
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: table;
   margin: 0px auto;
@@ -148,7 +149,7 @@ body {
 }
 
 .modal-content {
-  background: rgb(10, 10, 15, 0.85);
+  background: rgba(10, 10, 15, 0.85);
   box-shadow: 0 0 20px black;
   position: absolute;
   margin: 5px;
