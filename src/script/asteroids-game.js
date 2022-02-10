@@ -20,10 +20,12 @@ const SHIP_INV_DUR = 3; // duration of the ship's invisibility in seconds
 const SHIP_SIZE = 30; // ship height in pixels
 const SHIP_THRUST = 5; // acceleration of the ship in pixels per second per second
 const SHIP_TURN_SPD = 360; // turn speed in degrees per second
+
 let SHOW_BOUNDING = false; // show or hide collision bounding
 let SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
 let MUSIC_ON = false;
 let SOUND_ON = false;
+
 const TEXT_FADE_TIME = 2.5; // text fade time in seconds
 const TEXT_SIZE = 40; // text font height in pixels
 
@@ -32,48 +34,33 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 ////MENU onClick =>>
-document.querySelector('#btn_sound').addEventListener('click', soundOn);
-document.querySelector('#btn_music').addEventListener('click', musicOn);
-document.querySelector('#btn_center_dot').addEventListener('click', centreDor);
 document
-  .querySelector('#btn_collision_bounding')
-  .addEventListener('click', collisionBounding);
+  .querySelector('#menu_btns')
+  .addEventListener('keydown', (e) => e.preventDefault());
 
-async function soundOn() {
-  if (SOUND_ON) {
-    SOUND_ON = false;
-    document.querySelector('#btn_s').className = 'fas fa-volume-mute';
-  } else {
-    SOUND_ON = true;
-    document.querySelector('#btn_s').className = 'fas fa-volume-up';
-  }
+function soundOn() {
+  SOUND_ON = !SOUND_ON;
+  SOUND_ON
+    ? (document.querySelector('#btn_s').className = 'fas fa-volume-up')
+    : (document.querySelector('#btn_s').className = 'fas fa-volume-mute');
 }
-async function musicOn() {
-  if (MUSIC_ON) {
-    document.querySelector('#btn_m').className = 'fas fa-music off';
-    MUSIC_ON = false;
-  } else {
-    document.querySelector('#btn_m').className = 'fas fa-music on';
-    MUSIC_ON = true;
-  }
+function musicOn() {
+  MUSIC_ON = !MUSIC_ON;
+  MUSIC_ON
+    ? (document.querySelector('#btn_m').className = 'fas fa-music on')
+    : (document.querySelector('#btn_m').className = 'fas fa-music off');
 }
-async function centreDor() {
-  if (SHOW_CENTRE_DOT) {
-    SHOW_CENTRE_DOT = false;
-    document.querySelector('#btn_cd').className = 'far fa-dot-circle off';
-  } else {
-    SHOW_CENTRE_DOT = true;
-    document.querySelector('#btn_cd').className = 'far fa-dot-circle on';
-  }
+function centreDor() {
+  SHOW_CENTRE_DOT = !SHOW_CENTRE_DOT;
+  SHOW_CENTRE_DOT
+    ? (document.querySelector('#btn_cd').className = 'far fa-dot-circle on')
+    : (document.querySelector('#btn_cd').className = 'far fa-dot-circle off');
 }
-async function collisionBounding() {
-  if (SHOW_BOUNDING) {
-    SHOW_BOUNDING = false;
-    document.querySelector('#btn_cb').className = 'fas fa-expand off';
-  } else {
-    SHOW_BOUNDING = true;
-    document.querySelector('#btn_cb').className = 'fas fa-expand on';
-  }
+function collisionBounding() {
+  SHOW_BOUNDING = !SHOW_BOUNDING;
+  SHOW_BOUNDING
+    ? (document.querySelector('#btn_cb').className = 'fas fa-expand on')
+    : (document.querySelector('#btn_cb').className = 'fas fa-expand off');
 }
 ////MENU onClick <<=
 
@@ -203,13 +190,13 @@ function gameOver() {
   modal.style.display = 'flex';
   fullscreen.classList.add('blur-bg');
 
-  closeModal.onclick = function() {
+  closeModal.onclick = function () {
     modal.style.display = 'none';
     fullscreen.classList.remove('blur-bg');
     newGame();
   };
 
-  window.onclick = function(event) {
+  window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = 'none';
       fullscreen.classList.remove('blur-bg');
@@ -225,6 +212,9 @@ function keyDown(/** @type {KeyboardEvent} */ ev) {
 
   switch (ev.keyCode) {
     case 32: // spacebar (shoot laser)
+      shootLaser();
+      break;
+    case 0: // spacebar (shoot laser)
       shootLaser();
       break;
     case 37: // left arrow (rotate ship left)
@@ -248,6 +238,9 @@ function keyUp(/** @type {KeyboardEvent} */ ev) {
     case 32: // spacebar (aloow shooting again)
       ship.canShoot = true;
       break;
+    case 0: // spacebar (shoot laser)
+      shootLaser();
+      break;
     case 37: // left arrow (stop rotating left)
       ship.rot = 0;
       break;
@@ -265,16 +258,12 @@ function newAsteroid(x, y, r) {
   let roid = {
     x: x,
     y: y,
-    xv:
-      ((Math.random() * ROID_SPD * lvlMult) / FPS) *
-      (Math.random() < 0.5 ? 1 : -1),
-    yv:
-      ((Math.random() * ROID_SPD * lvlMult) / FPS) *
-      (Math.random() < 0.5 ? 1 : -1),
+    xv: ((Math.random() * ROID_SPD * lvlMult) / FPS) * (Math.random() < 0.5 ? 1 : -1),
+    yv: ((Math.random() * ROID_SPD * lvlMult) / FPS) * (Math.random() < 0.5 ? 1 : -1),
     a: Math.random() * Math.PI * 2, // in radians
     r: r,
     offs: [],
-    vert: Math.floor(Math.random() * (ROID_VERT + 1) + ROID_VERT / 2)
+    vert: Math.floor(Math.random() * (ROID_VERT + 1) + ROID_VERT / 2),
   };
 
   // populate the offsets array
@@ -324,8 +313,8 @@ function newShip() {
     thrusting: false,
     thrust: {
       x: 0,
-      y: 0
-    }
+      y: 0,
+    },
   };
 }
 
@@ -339,7 +328,7 @@ function shootLaser() {
       xv: (LASER_SPD * Math.cos(ship.a)) / FPS,
       yv: (-LASER_SPD * Math.sin(ship.a)) / FPS,
       dist: 0,
-      explodeTime: 0
+      explodeTime: 0,
     });
     fxlaser.play();
   }
@@ -355,7 +344,7 @@ function Music(srcLow, srcHigh) {
   this.tempo = 1.0; //sec per beat
   this.beatTime = 0; //frames left until next beat
 
-  this.play = async function() {
+  this.play = async function () {
     if (MUSIC_ON) {
       if (this.low) {
         this.soundLow.play();
@@ -366,11 +355,11 @@ function Music(srcLow, srcHigh) {
     }
   };
 
-  this.setAsteroidRatio = function(ratio) {
+  this.setAsteroidRatio = function (ratio) {
     this.tempo = 1.0 - 0.5 * (1.0 - ratio);
   };
 
-  this.tick = async function() {
+  this.tick = async function () {
     if (this.beatTime == 0) {
       this.play();
       this.beatTime = Math.ceil(this.tempo * FPS);
@@ -385,14 +374,14 @@ function Sound(src, maxStreams = 1, vol = 0.5) {
     this.streams.push(new Audio(src));
     this.streams[i].volume = vol;
   }
-  this.play = function() {
+  this.play = function () {
     if (SOUND_ON) {
       this.streamNum = (this.streamNum + 1) % maxStreams;
       this.streams[this.streamNum].play();
     }
   };
 
-  this.stop = function() {
+  this.stop = function () {
     this.streams[this.streamNum].pause();
     this.streams[this.streamNum].currentTime = 0;
   };
@@ -586,12 +575,7 @@ function update() {
   let lifeColour;
   for (let i = 0; i < lives; i++) {
     lifeColour = exploding && i == lives - 1 ? 'tomato' : 'rgb(130, 140, 150)';
-    drawShip(
-      SHIP_SIZE + i * SHIP_SIZE * 1.25,
-      SHIP_SIZE,
-      0.5 * Math.PI,
-      lifeColour
-    );
+    drawShip(SHIP_SIZE + i * SHIP_SIZE * 1.25, SHIP_SIZE, 0.5 * Math.PI, lifeColour);
     ctx.shadowBlur = 0;
   }
 
@@ -623,10 +607,8 @@ function update() {
       ctx.beginPath();
       ctx.moveTo(
         // rear left
-        ship.x -
-          ship.r * ((5 / 4.5) * Math.cos(ship.a) + 0.5 * Math.sin(ship.a)),
-        ship.y +
-          ship.r * ((5 / 4.5) * Math.sin(ship.a) - 0.5 * Math.cos(ship.a))
+        ship.x - ship.r * ((5 / 4.5) * Math.cos(ship.a) + 0.5 * Math.sin(ship.a)),
+        ship.y + ship.r * ((5 / 4.5) * Math.sin(ship.a) - 0.5 * Math.cos(ship.a))
       );
       ctx.lineTo(
         // rear centre (behind the ship)
@@ -635,10 +617,8 @@ function update() {
       );
       ctx.lineTo(
         // rear right
-        ship.x -
-          ship.r * ((5 / 4.5) * Math.cos(ship.a) - 0.5 * Math.sin(ship.a)),
-        ship.y +
-          ship.r * ((5 / 4.5) * Math.sin(ship.a) + 0.5 * Math.cos(ship.a))
+        ship.x - ship.r * ((5 / 4.5) * Math.cos(ship.a) - 0.5 * Math.sin(ship.a)),
+        ship.y + ship.r * ((5 / 4.5) * Math.sin(ship.a) + 0.5 * Math.cos(ship.a))
       );
       ctx.closePath();
       ctx.fill();
@@ -731,14 +711,7 @@ function update() {
       ctx.lineWidth = SHIP_SIZE / 10;
       ctx.beginPath();
 
-      ctx.arc(
-        ship.lasers[i].x,
-        ship.lasers[i].y,
-        SHIP_SIZE / 25,
-        0,
-        Math.PI * 2,
-        false
-      );
+      ctx.arc(ship.lasers[i].x, ship.lasers[i].y, SHIP_SIZE / 25, 0, Math.PI * 2, false);
       ctx.stroke();
       ctx.fill();
     } else {
@@ -747,40 +720,19 @@ function update() {
       ctx.shadowColor = 'red';
       ctx.shadowBlur = 5;
       ctx.beginPath();
-      ctx.arc(
-        ship.lasers[i].x,
-        ship.lasers[i].y,
-        ship.r * 0.95,
-        0,
-        Math.PI * 2,
-        false
-      );
+      ctx.arc(ship.lasers[i].x, ship.lasers[i].y, ship.r * 0.95, 0, Math.PI * 2, false);
       ctx.fill();
 
       ctx.fillStyle = 'orange';
       ctx.shadowBlur = 0;
       ctx.beginPath();
-      ctx.arc(
-        ship.lasers[i].x,
-        ship.lasers[i].y,
-        ship.r * 0.75,
-        0,
-        Math.PI * 2,
-        false
-      );
+      ctx.arc(ship.lasers[i].x, ship.lasers[i].y, ship.r * 0.75, 0, Math.PI * 2, false);
       ctx.fill();
 
       ctx.fillStyle = 'gold';
       ctx.shadowBlur = 0;
       ctx.beginPath();
-      ctx.arc(
-        ship.lasers[i].x,
-        ship.lasers[i].y,
-        ship.r * 0.35,
-        0,
-        Math.PI * 2,
-        false
-      );
+      ctx.arc(ship.lasers[i].x, ship.lasers[i].y, ship.r * 0.35, 0, Math.PI * 2, false);
       ctx.fill();
     }
   }
@@ -800,10 +752,7 @@ function update() {
       ly = ship.lasers[j].y;
 
       // detect hits
-      if (
-        ship.lasers[j].explodeTime == 0 &&
-        distBetweenPoints(ax, ay, lx, ly) < ar
-      ) {
+      if (ship.lasers[j].explodeTime == 0 && distBetweenPoints(ax, ay, lx, ly) < ar) {
         // destroy the asteroid and activate the laser explosion
         destroyAsteroid(i);
         ship.lasers[j].explodeTime = Math.ceil(LASER_EXPLODE_DUR * FPS);

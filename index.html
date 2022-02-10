@@ -20,28 +20,18 @@
         <div id="fullscreen-body" class="fullscreen-body">
           <div class="container">
             <div class="top-menu">
-              <div class="menu-info">
-                Asteroids (remake of original 1979 Atari game)
-              </div>
-              <div class="menu-buttons">
-                <button id="btn_sound">
-                  <i
-                    title="Sound ON/OFF"
-                    id="btn_s"
-                    class="fas fa-volume-mute"
-                  ></i>
+              <div class="menu-info">Asteroids (remake of original 1979 Atari game)</div>
+              <div class="menu-buttons" id="menu_btns">
+                <button id="btn_sound" onClick="soundOn()">
+                  <i title="Sound ON/OFF" id="btn_s" class="fas fa-volume-mute"></i>
                 </button>
-                <button id="btn_music">
+                <button id="btn_music" onClick="musicOn()">
                   <i title="Music ON/OFF" id="btn_m" class="fas fa-music"></i>
                 </button>
-                <button id="btn_center_dot">
-                  <i
-                    title="Center dot ON/OFF"
-                    id="btn_cd"
-                    class="far fa-dot-circle"
-                  ></i>
+                <button id="btn_center_dot" onClick="centreDor()">
+                  <i title="Center dot ON/OFF" id="btn_cd" class="far fa-dot-circle"></i>
                 </button>
-                <button id="btn_collision_bounding">
+                <button id="btn_collision_bounding" onClick="collisionBounding()">
                   <i
                     title="Collision bounding ON/OFF"
                     id="btn_cb"
