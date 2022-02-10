@@ -23,8 +23,8 @@ const SHIP_TURN_SPD = 360; // turn speed in degrees per second
 
 let SHOW_BOUNDING = false; // show or hide collision bounding
 let SHOW_CENTRE_DOT = false; // show or hide ship's centre dot
-let MUSIC_ON = false;
-let SOUND_ON = false;
+let MUSIC_ON = true;
+let SOUND_ON = true;
 
 const TEXT_FADE_TIME = 2.5; // text fade time in seconds
 const TEXT_SIZE = 40; // text font height in pixels
